@@ -1,22 +1,19 @@
-import 'package:app/inicio.dart';
 import 'package:flutter/material.dart';
+import 'package:app/screens/dashboard.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const Grimorio());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class Grimorio extends StatelessWidget {
+  const Grimorio({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        "/": (context) => Start(),
-        
-      },
-
+      title: "Grimório",
+      theme: ThemeData.dark(useMaterial3: true),
+      home: const Dashboard(),
     );
   }
 }
