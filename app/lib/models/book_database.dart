@@ -1,10 +1,11 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 import '../services/google_book_service.dart';
-
 
 class PersonalBookDatabase {
   static const String _tableName = "bookTable";
@@ -13,15 +14,15 @@ class PersonalBookDatabase {
   static const String _dayFinished = "dayFinished";
   static const String _comments = "comments";
   static const String _googleBook = "googleBook";
- 
+
   static const String createTableSQL =
       // ignore: prefer_adjacent_string_concatenation, prefer_interpolation_to_compose_strings
       "CREATE TABLE $_tableName($_id INTEGER NOT NULL PRIMARY KEY," +
-          "$_dayStarted TEXT," +
-          "$_dayFinished TEXT," +
-          "$_comments TEXT," +
-          "$_googleBook TEXT" +
-          ")";
+      "$_dayStarted TEXT," +
+      "$_dayFinished TEXT," +
+      "$_comments TEXT," +
+      "$_googleBook TEXT" +
+      ")";
 
   Future<Database> _getDatabase() async {
     final String path = join(await getDatabasesPath(), "book.db");
@@ -91,19 +92,13 @@ class PersonalBookDatabase {
 
     final Database database = await _getDatabase();
 
-    await database.delete(
-      _tableName,
-      where: "$_id = ?",
-      whereArgs: [book.id],
-    );
+    await database.delete(_tableName, where: "$_id = ?", whereArgs: [book.id]);
   }
 
   List<PersonalBook> _toList(List<Map<String, dynamic>> result) {
     final List<PersonalBook> listPost = [];
     for (Map<String, dynamic> map in result) {
-      listPost.add(
-        PersonalBook.fromMap(map),
-      );
+      listPost.add(PersonalBook.fromMap(map));
     }
     return listPost;
   }
@@ -113,15 +108,35 @@ class PersonalBookNotFindException implements Exception {}
 
 // These below are just examples. Need to create new models
 class PersonalBook {
-  int id = 0;
-  GoogleBook googleBook = GoogleBook(authors: "a", description: "b", id: "c", thumbnailLink: "d", title: "e");
+  late int? id;
+  late String dayStarted;
+  late String dayFinished;
+  late String comments;
+  late GoogleBook googleBook;
 
-  PersonalBook.fromMap(Map<String, dynamic> map){
+  PersonalBook({
+    required this.id,
+    required this.dayStarted,
+    required this.dayFinished,
+    required this.comments,
+    required this.googleBook,
+  });
+
+  PersonalBook.fromMap(Map<String, dynamic> map) {
     id = map["id"];
-    googleBook = map["googleBook"];
+    dayStarted = map["dayStarted"];
+    dayFinished = map["dayFinished"];
+    comments = map["comments"];
+    googleBook = GoogleBook.fromJson(json.decode(map["googleBook"]));
   }
 
   Map<String, dynamic> toMap() {
-    return {"id": id, "googleBook": googleBook};
+    return {
+      "id": id,
+      "googleBook": json.encode(googleBook.toMap()),
+      "dayStarted": dayStarted,
+      "dayFinished": dayFinished,
+      "comments": comments
+    };
   }
 }
