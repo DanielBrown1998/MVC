@@ -1,3 +1,4 @@
+import 'package:app/models/personal_book.dart';
 import 'package:flutter/material.dart';
 
 import 'theme/theme.dart';
@@ -8,13 +9,33 @@ import 'edit_details.dart';
 import 'home.dart';
 
 class BookDetails extends StatefulWidget {
-  BookDetails({super.key,});
+  final PersonalBook personalBook;
+  const BookDetails({super.key, required this.personalBook});
 
   @override
   State<BookDetails> createState() => _BookDetailsState();
 }
 
 class _BookDetailsState extends State<BookDetails> {
+  late String description;
+  late String authors;
+  late String title;
+  late String thumbnailLink;
+  late String dayStarted;
+  late String dayFinished;
+  late String comments;
+
+  @override
+  void initState() {
+    super.initState();
+    description = widget.personalBook.googleBook.description;
+    authors = widget.personalBook.googleBook.authors;
+    title = widget.personalBook.googleBook.title;
+    thumbnailLink = widget.personalBook.googleBook.thumbnailLink;
+    dayStarted = widget.personalBook.dayStarted;
+    dayFinished = widget.personalBook.dayFinished;
+    comments = widget.personalBook.comments;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +50,14 @@ class _BookDetailsState extends State<BookDetails> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(vertical: 24.0),
-                    child: DisplayText("Detalhes do Livro"),
+                    child: DisplayText(description),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
                     child: Image.network(
-                      "Image Link",
+                      thumbnailLink, // thumbnail link here!
                       height: 220,
                       width: 144,
                       fit: BoxFit.cover,
@@ -45,7 +66,7 @@ class _BookDetailsState extends State<BookDetails> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Book Title",
+                      title, // title here!
                       style: ModalDecorationProperties.bookTitle,
                     ),
                   ),
@@ -54,7 +75,7 @@ class _BookDetailsState extends State<BookDetails> {
                     child: SizedBox(
                       width: double.maxFinite,
                       child: Text(
-                        "Book Authors",
+                        authors,
                         style: ModalDecorationProperties.bookAuthor,
                       ),
                     ),
@@ -65,7 +86,7 @@ class _BookDetailsState extends State<BookDetails> {
                       children: [
                         Expanded(
                           child: Text(
-                            "Book Description",
+                            description,
                             maxLines: 4,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -93,13 +114,17 @@ class _BookDetailsState extends State<BookDetails> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Row(children: <Widget>[
-                      Text(
-                        "Day started",
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
-                      )
-                    ]),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          dayStarted, // read started here!                   
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
@@ -113,7 +138,7 @@ class _BookDetailsState extends State<BookDetails> {
                           ),
                         ),
                         Text(
-                          "Day Started",
+                          "Final da Leitura",
                           style: TextStyle(color: AppColors.mediumPink),
                         ),
                       ],
@@ -121,13 +146,17 @@ class _BookDetailsState extends State<BookDetails> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: Row(children: <Widget>[
-                      Text(
-                        "Day Finished",
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
-                      )
-                    ]),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          dayFinished, // read final here!
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
@@ -143,9 +172,7 @@ class _BookDetailsState extends State<BookDetails> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 32.0),
                     child: Row(
-                      children: [
-                        Expanded(child: Text("Book Comments")),
-                      ],
+                      children: [Expanded(child: Text(comments))], // comments here!
                     ),
                   ),
                   Padding(
