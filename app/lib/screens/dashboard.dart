@@ -16,7 +16,9 @@ class Dashboard extends StatelessWidget {
       "Faça anotações",
       "visualize seu progresso",
     ];
-
+    Axis direction = Axis.horizontal;
+    bool isReverse = false;
+    int index = 0;
     return SafeArea(
       child: Container(
         decoration: AppBackgroundProperties.boxDecoration,
@@ -28,7 +30,7 @@ class Dashboard extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
-                  //SvgPicture.asset("assets/images/background.svg"),
+                  SvgPicture.asset("assets/images/background.svg"),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
@@ -39,9 +41,16 @@ class Dashboard extends StatelessWidget {
                           (int i) => CarouselItem(text: texts[i], index: i),
                         ),
                         options: CarouselOptions(
+                          initialPage: index,
+                          scrollDirection: direction,
+                          reverse: isReverse,
                           autoPlay: true,
-                          height: MediaQuery.of(context).size.height * .5,
+                          aspectRatio: 16 / 9,
+                          viewportFraction: 1,
+                          height: MediaQuery.of(context).size.height * .6,
                           autoPlayInterval: Duration(seconds: 5),
+                          autoPlayAnimationDuration: Duration(seconds: 1),
+                          autoPlayCurve: Curves.easeInBack,
                         ),
                       ),
                       Padding(

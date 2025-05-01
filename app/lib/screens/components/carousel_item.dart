@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CarouselItem extends StatelessWidget {
-  const CarouselItem({super.key, required this.text, required this.index});
+  const CarouselItem({
+    super.key,
+    required this.text,
+    required this.index,
+  });
   final String text;
   final int index;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,7 +22,7 @@ class CarouselItem extends StatelessWidget {
           style: TextStyle(
             color: Colors.white,
             fontSize: 36,
-            fontFamily: 'Bigelow Rules',
+            fontFamily: 'BigelowRules',
             fontWeight: FontWeight.w500,
           ),
         ),

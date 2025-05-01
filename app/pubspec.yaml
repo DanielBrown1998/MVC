@@ -29,9 +29,9 @@ flutter:
     - assets/carousel/
 
 fonts:
-  -family: Biglow Rules
+  -family: BigelowRules
   fonts: 
-    - asset: assets/fonts/BiglowRules-Regular-ttf
+    - asset: assets/fonts/BigelowRules-Regular.ttf
 
 flutter_native_splash:
   color: "#4D1245"

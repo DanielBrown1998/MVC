@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   awaitAndNextScreen() {
-    Future.delayed(Duration(seconds: timeAnimation + timeDelayed)).then((
+    Future.delayed(Duration(seconds: timeAnimation + timeDelayed + 1)).then((
       value,
     ) {
       Navigator.pushReplacementNamed(context, "home");
