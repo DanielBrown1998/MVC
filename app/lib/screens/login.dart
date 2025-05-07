@@ -5,6 +5,7 @@ import 'package:app/screens/home.dart';
 import 'package:app/screens/components/primary_button.dart';
 import 'package:app/screens/sign_up.dart';
 import 'package:app/screens/theme/theme.dart';
+import '../route_transition.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -50,44 +51,63 @@ class _LoginState extends State<Login> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 24.0),
                                 child: TextFormField(
-                                  style: InputDecorationProperties.textDecoration,
-                                  decoration: InputDecorationProperties.newInputDecoration("seuemail@dominio.com", "E-mail"),
+                                  style:
+                                      InputDecorationProperties.textDecoration,
+                                  decoration:
+                                      InputDecorationProperties.newInputDecoration(
+                                        "seuemail@dominio.com",
+                                        "E-mail",
+                                      ),
                                   keyboardType: TextInputType.emailAddress,
                                 ),
                               ),
                               TextFormField(
                                 style: InputDecorationProperties.textDecoration,
-                                decoration: InputDecorationProperties.newInputDecoration("******", "Senha"),
+                                decoration:
+                                    InputDecorationProperties.newInputDecoration(
+                                      "******",
+                                      "Senha",
+                                    ),
                                 obscureText: true,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 28.0),
                                 child: TextButton(
                                   style: TextButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(vertical: 8.0)),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 8.0,
+                                    ),
+                                  ),
                                   onPressed: () {},
                                   child: const Text(
                                     "Esqueci a senha",
                                     style: TextStyle(
-                                        decoration: TextDecoration.underline),
+                                      decoration: TextDecoration.underline,
+                                    ),
                                   ),
                                 ),
                               ),
-                              PrimaryButton(text: "Entrar", onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const Home()));
-                              }),
+                              PrimaryButton(
+                                text: "Entrar",
+                                onTap: () {
+                                  Navigator.of(
+                                    context,
+                                  ).push(sliderRouteTransition(const Home()));
+                                },
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
                                 child: TextButton(
                                   style: TextButton.styleFrom(
                                     fixedSize: const Size.fromWidth(246),
-                                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 8.0,
+                                    ),
                                   ),
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => const Signup()));
+                                    Navigator.of(context).push(
+                                      sliderRouteTransition(const Signup()),
+                                    );
                                   },
                                   child: Text(
                                     "Cadastre-se",

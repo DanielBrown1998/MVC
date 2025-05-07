@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
+// import 'package:flutter_svg/svg.dart';
 import 'theme/theme.dart';
-import 'book_details.dart';
+import 'package:lottie/lottie.dart';
+// import 'book_details.dart';
 import 'components/display_text.dart';
 import 'components/floating_button.dart';
 import 'search_books.dart';
+import '../route_transition.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,7 +16,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   @override
   void initState() {
     super.initState();
@@ -24,37 +24,38 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Container(
-      decoration: AppBackgroundProperties.boxDecoration,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Center(
-          child: _EmptyHome(),
-          // Need connection with sqflite
-          // child: FutureBuilder(
-          //   future: "Future",
-          //   builder: (context, snapshot) {
-          //     switch (snapshot.connectionState) {
-          //       case ConnectionState.none:
-          //         break;
-          //       case ConnectionState.waiting:
-          //         return const CircularProgressIndicator();
-          //       case ConnectionState.active:
-          //         break;
-          //       case ConnectionState.done:
-          //         if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-          //           return _FilledHome(listPersonalBook: snapshot.data!);
-          //         }
-          //         break;
-          //       default:
-          //         break;
-          //     }
-          //     return const _EmptyHome();
-          //   },
-          // ),
+      child: Container(
+        decoration: AppBackgroundProperties.boxDecoration,
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: _EmptyHome(),
+            // Need connection with sqflite
+            // child: FutureBuilder(
+            //   future: "Future",
+            //   builder: (context, snapshot) {
+            //     switch (snapshot.connectionState) {
+            //       case ConnectionState.none:
+            //         break;
+            //       case ConnectionState.waiting:
+            //         return const CircularProgressIndicator();
+            //       case ConnectionState.active:
+            //         break;
+            //       case ConnectionState.done:
+            //         if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            //           return _FilledHome(listPersonalBook: snapshot.data!);
+            //         }
+            //         break;
+            //       default:
+            //         break;
+            //     }
+            //     return const _EmptyHome();
+            //   },
+            // ),
+          ),
         ),
       ),
-    ));
+    );
   }
 }
 
@@ -145,36 +146,43 @@ class _EmptyHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-      const Padding(
-        padding: EdgeInsets.only(bottom: 32.0),
-        child: DisplayText("Grimório"),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(bottom: 40.0),
-        child: SvgPicture.asset("assets/images/grimorio_empty.svg"),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: Text(
-          "Seu Grimório está vazio!",
-          style: TextStyle(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        const Padding(
+          padding: EdgeInsets.only(bottom: 32.0),
+          child: DisplayText("Grimório"),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 40.0),
+          child: Lottie.asset("assets/animations/book_lottie.json"),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Text(
+            "Seu Grimório está vazio!",
+            style: TextStyle(
               fontFamily: "Bigelow Rules",
               fontSize: 36,
-              color: AppColors.lightPink),
+              color: AppColors.lightPink,
+            ),
+          ),
         ),
-      ),
-      const Padding(
-        padding: EdgeInsets.only(bottom: 40.0),
-        child: Text(
-          "Vamos aprender algo novo?",
-          style: TextStyle(fontWeight: FontWeight.w500),
+        const Padding(
+          padding: EdgeInsets.only(bottom: 40.0),
+          child: Text(
+            "Vamos aprender algo novo?",
+            style: TextStyle(fontWeight: FontWeight.w500),
+          ),
         ),
-      ),
-      FloatingButton(onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const SearchBooks()));
-      }),
-    ]);
+        FloatingButton(
+          onTap: () {
+            Navigator.of(
+              context,
+            ).pushReplacement(sliderRouteTransition(const SearchBooks()));
+          },
+        ),
+      ],
+    );
   }
 }

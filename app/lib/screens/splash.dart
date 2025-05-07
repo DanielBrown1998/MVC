@@ -1,3 +1,4 @@
+import 'package:app/route_transition.dart';
 import 'package:app/screens/dashboard.dart';
 import "package:flutter/material.dart";
 import './theme/theme.dart';
@@ -26,7 +27,13 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(Duration(seconds: timeAnimation + timeDelayed + 1)).then((
       value,
     ) {
-      Navigator.pushReplacementNamed(context, "home");
+      Navigator.of(context).pushReplacement(
+        sliderRouteTransition(
+          const Dashboard(),
+          duration: const Duration(milliseconds: 1220),
+          beginPsotion: const Offset(1, 0),
+        ),
+      );
     });
   }
 

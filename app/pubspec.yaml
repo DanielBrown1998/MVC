@@ -13,6 +13,7 @@ dependencies:
   flutter_native_splash: ^2.4.6
   flutter_svg: ^2.1.0
   http: ^1.3.0
+  lottie: ^3.3.1
   sqflite: ^2.4.2
 
 dev_dependencies:
@@ -27,6 +28,7 @@ flutter:
     - assets/images/
     - assets/fonts/
     - assets/carousel/
+    - assets/animations/
 
 fonts:
   -family: BigelowRules

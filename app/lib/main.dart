@@ -1,4 +1,5 @@
 import 'package:app/screens/dashboard.dart';
+import 'package:app/screens/search_books.dart';
 import 'package:flutter/material.dart';
 // import 'package:app/screens/dashboard.dart';
 import 'package:app/screens/splash.dart';
@@ -19,6 +20,7 @@ class Grimorio extends StatelessWidget {
       routes: {
         "/": (context) => SplashScreen(),
         "home": (context) => Dashboard(),
+        "search": (context) => SearchBooks(),
       },
     );
   }
