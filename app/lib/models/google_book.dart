@@ -24,7 +24,7 @@ class GoogleBook {
                 .map((e) => e)
                 .toString();
     description = map["volumeInfo"]["description"] ?? "sem descricao";
-    thumbnailLink = map["volumeInfo"]["imageLinks"]?["thumbnail"] ?? "https://placehold.co/200x290";
+    thumbnailLink = map["volumeInfo"]["imageLinks"]?["thumbnail"];
   }
 
   GoogleBook.fromJson(Map<String, dynamic> map) {

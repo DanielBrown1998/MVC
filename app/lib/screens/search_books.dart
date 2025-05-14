@@ -16,6 +16,7 @@ class SearchBooks extends StatefulWidget {
 
 class _SearchBooksState extends State<SearchBooks> {
   final GoogleBooksService googleBooksService = GoogleBooksService();
+  TextEditingController search = TextEditingController();
   // Need to change list type
   Future<List<GoogleBook>>? booksList;
 
@@ -41,10 +42,14 @@ class _SearchBooksState extends State<SearchBooks> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 32.0),
                     child: TextFormField(
+                      controller: search,
                       onChanged: (value) {
+                        search.text = value;
                         //Populate list of books from API
                         setState(() {
-                          booksList = googleBooksService.searchBooks(value);
+                          booksList = googleBooksService.searchBooks(
+                            search.text,
+                          );
                         });
                       },
                       decoration: InputDecorationProperties.newInputDecoration(
@@ -94,20 +99,18 @@ class _BooksList extends StatelessWidget {
             if (snapshot.hasData || snapshot.data != []) {
               return SliverList.builder(
                 itemBuilder:
-                    (context, index) => InkWell(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder:
-                              (context) => Dialog(
-                                insetPadding: const EdgeInsets.all(16),
-                                clipBehavior: Clip.hardEdge,
-                                shape: ModalDecorationProperties.modalBorder,
-                                child: SingleChildScrollView(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(32.0),
-                                    decoration:
-                                        ModalDecorationProperties.boxDecoration,
+                    (context, index) => Container(
+                      constraints: BoxConstraints(maxWidth: double.maxFinite),
+                      child: InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder:
+                                (context) => Dialog(
+                                  insetPadding: const EdgeInsets.all(16),
+                                  clipBehavior: Clip.hardEdge,
+                                  shape: ModalDecorationProperties.modalBorder,
+                                  child: SingleChildScrollView(
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
@@ -145,7 +148,13 @@ class _BooksList extends StatelessWidget {
                                             height: 220,
                                             width: 144,
                                             fit: BoxFit.cover,
-                                            loadingBuilder: (context, child, loadingProgress) => CircularProgressIndicator(),
+                                            loadingBuilder:
+                                                (
+                                                  context,
+                                                  child,
+                                                  loadingProgress,
+                                                ) =>
+                                                    CircularProgressIndicator(),
                                             errorBuilder: (
                                               context,
                                               error,
@@ -212,10 +221,10 @@ class _BooksList extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              ),
-                        );
-                      },
-                      // child: Entry(book: snapshot.data![index]),
+                          );
+                        },
+                        child: Entry(googleBook: snapshot.data![index]),
+                      ),
                     ),
                 itemCount: snapshot.data!.length,
               );
