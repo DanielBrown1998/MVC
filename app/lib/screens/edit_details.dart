@@ -94,7 +94,12 @@ class _EditDetailsState extends State<EditDetails> {
                               child: PrimaryButton(
                                 text: "Salvar",
                                 onTap: () {
-                                  // Navigator.pop(context, "Updated book");
+                                  Navigator.pop(context, PersonalBook(
+                                    googleBook: googleBook,
+                                    dayStarted: initialDateController.text,
+                                    dayFinished: finalDateController.text,
+                                    comments: commentsController.text,
+                                  ));
                                 },
                               ),
                             ),

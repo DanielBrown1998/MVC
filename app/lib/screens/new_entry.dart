@@ -1,3 +1,4 @@
+import 'package:app/controller/book_controller.dart';
 import 'package:app/models/google_book.dart';
 import 'package:app/models/personal_book.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,8 @@ import 'theme/theme.dart';
 import 'home.dart';
 
 class NewEntry extends StatefulWidget {
-  const NewEntry({super.key, required this.personalBook});
-  final PersonalBook personalBook;
+  const NewEntry({super.key, required this.googleBook});
+  final GoogleBook googleBook;
 
   @override
   State<NewEntry> createState() => _NewEntryState();
@@ -19,6 +20,7 @@ class NewEntry extends StatefulWidget {
 
 class _NewEntryState extends State<NewEntry> {
   final _formKey = GlobalKey<FormState>();
+  final BookController bookController = BookController();
   final TextEditingController initialDateController = TextEditingController();
   final TextEditingController finalDateController = TextEditingController();
   final TextEditingController commentsController = TextEditingController();
@@ -26,7 +28,7 @@ class _NewEntryState extends State<NewEntry> {
   @override
   void initState() {
     super.initState();
-    googleBook = widget.personalBook.googleBook;
+    googleBook = widget.googleBook;
   }
 
   @override
@@ -88,7 +90,20 @@ class _NewEntryState extends State<NewEntry> {
                               child: PrimaryButton(
                                 text: "Adicionar",
                                 onTap: () {
-                                  // Needs add book logic
+                                  if (_formKey.currentState!.validate()) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Adicionando livro..."),
+                                      ),
+                                    );
+                                  }
+                                  PersonalBook personalBook = PersonalBook(
+                                    googleBook: googleBook,
+                                    comments: commentsController.text,
+                                    dayStarted: initialDateController.text,
+                                    dayFinished: finalDateController.text,
+                                  );
+                                  bookController.save(personalBook);
 
                                   Navigator.pushAndRemoveUntil(
                                     context,

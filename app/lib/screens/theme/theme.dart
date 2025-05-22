@@ -102,7 +102,7 @@ abstract class ModalDecorationProperties {
 }
 
 abstract class DisplayTextProperties {
-  static TextStyle textStyle = const TextStyle(fontFamily: "Bigelow Rules", fontSize: 36);
+  static TextStyle textStyle = const TextStyle(fontFamily: "Bigelow Rules", fontSize: 30);
 }
 
 abstract class EntryDecorationProperties {

@@ -1,3 +1,4 @@
+import 'package:app/controller/book_controller.dart';
 import 'package:app/models/personal_book.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,8 @@ class _BookDetailsState extends State<BookDetails> {
   late String dayStarted;
   late String dayFinished;
   late String comments;
+
+  final BookController bookController = BookController();
 
   @override
   void initState() {
@@ -181,18 +184,20 @@ class _BookDetailsState extends State<BookDetails> {
                       icon: Icons.edit,
                       text: "Editar",
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => EditDetails(
-                        //               book: "book",
-                        //             ))).then((value) {
-                        //   setState(() {
-                        //     if (value != null) {
-                        //       "Update book";
-                        //     }
-                        //   });
-                        // });
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditDetails(
+                                      personalBook: widget.personalBook,
+                                    ))).then((value) {
+                          setState(() {
+                            if (value != null) {
+                              bookController.save(
+                                value
+                              );
+                            }
+                          });
+                        });
                       },
                     ),
                   ),
@@ -203,11 +208,12 @@ class _BookDetailsState extends State<BookDetails> {
                       text: "Excluir",
                       onTap: () {
                         // Delete book
-                        // Navigator.pushAndRemoveUntil(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => const Home()),
-                        //   (_) => false,
-                        // );
+                        bookController.deleteBook(widget.personalBook);
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => const Home()),
+                          (_) => false,
+                        );
                       },
                     ),
                   ),
